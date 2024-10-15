@@ -30,7 +30,7 @@ app.get('/video', async (req, res) => {
             url: `https://youtu.be/${videoId}?si=wLIhI3mr1YV0gl9L`
         };
 
-        const downloadUrl = `https://betadash-api-swordslush.vercel.app/ytdl?url=${result.url}`;
+        const downloadUrl = `https://ytdownloader-woad.vercel.app/ytdl?url=${result.url}`;
 
         const downloadResponse = await axios.get(downloadUrl);
         const downloadResult = downloadResponse.data.data;
