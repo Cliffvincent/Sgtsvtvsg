@@ -1,7 +1,3 @@
-{ pkgs }: {
-  env = { LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [pkgs.libuuid]; };
-  deps = [
-        pkgs.libuuid
-
-  ];
+{pkgs}: {
+  deps = [ ];
 }

@@ -1,9 +1,30 @@
 const express = require('express');
 const axios = require('axios');
 const yts = require('yt-search');
+const { ytdown } = require("nayan-media-downloader");
 
 const app = express();
 const port = 3000;
+
+app.get('/ytdl', async (req, res) => {
+    const videoUrl = req.query.url;
+
+    if (!videoUrl) {
+        return res.status(400).send({"Error": "Missing 'url' query parameter"});
+    }
+
+    try {
+        const response = await ytdown(videoUrl);
+
+        delete response.developer;
+        delete response.devfb;
+        delete response.devwp;
+
+        res.json(response);
+    } catch (error) {
+        res.status(500).send("Error downloading video");
+    }
+});
 
 app.get('/video', async (req, res) => {
     const searchQuery = req.query.search;
@@ -30,7 +51,7 @@ app.get('/video', async (req, res) => {
             url: `https://youtu.be/${videoId}?si=wLIhI3mr1YV0gl9L`
         };
 
-        const downloadUrl = `https://ytdownloader-woad.vercel.app/ytdl?url=${result.url}`;
+        const downloadUrl = `https://dlvc.vercel.app/ytdl?url=${result.url}`;
 
         const downloadResponse = await axios.get(downloadUrl);
         const downloadResult = downloadResponse.data.data;
@@ -50,29 +71,6 @@ app.get('/video', async (req, res) => {
         res.status(500).json({ error: 'Error fetching video or download URL' });
     }
 });
-
-const { ytdown } = require("nayan-media-downloader");
-
-app.get('/ytdl', async (req, res) => {
-    const videoUrl = req.query.url;
-
-    if (!videoUrl) {
-        return res.status(400).send({"Error": "Missing 'url' query parameter"});
-    }
-
-    try {
-        const response = await ytdown(videoUrl);
-
-        delete response.developer;
-        delete response.devfb;
-        delete response.devwp;
-
-        res.json(response);
-    } catch (error) {
-        res.status(500).send("Error downloading video");
-    }
-});
-
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
