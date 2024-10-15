@@ -51,6 +51,29 @@ app.get('/video', async (req, res) => {
     }
 });
 
+const { ytdown } = require("nayan-media-downloader");
+
+app.get('/ytdl', async (req, res) => {
+    const videoUrl = req.query.url;
+
+    if (!videoUrl) {
+        return res.status(400).send({"Error": "Missing 'url' query parameter"});
+    }
+
+    try {
+        const response = await ytdown(videoUrl);
+
+        delete response.developer;
+        delete response.devfb;
+        delete response.devwp;
+
+        res.json(response);
+    } catch (error) {
+        res.status(500).send("Error downloading video");
+    }
+});
+
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
