@@ -2,9 +2,14 @@ const express = require('express');
 const axios = require('axios');
 const yts = require('yt-search');
 const { ytdown } = require("nayan-media-downloader");
+const path = require("path");
 
 const app = express();
 const port = 3000;
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "/cliff/🖕.html"));
+});
 
 app.get('/ytdl', async (req, res) => {
     const videoUrl = req.query.url;
