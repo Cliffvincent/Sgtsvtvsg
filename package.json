@@ -14,7 +14,6 @@
     "@types/node": "^18.0.6",
     "axios": "^1.7.7",
     "express": "^4.21.1",
-    "nayan-media-downloader": "^2.6.2",
     "yt-search": "^2.12.1"
   }
 }
