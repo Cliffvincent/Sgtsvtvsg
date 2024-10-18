@@ -1,7 +1,5 @@
 const express = require('express');
 const axios = require('axios');
-const yts = require('yt-search');
-const path = require("path");
 
 const app = express();
 const port = 3000;
@@ -18,7 +16,7 @@ app.get('/yt-audio', async (req, res) => {
     }
 
     try {
-        const videoSearchUrl = `https://betadash-search-download.vercel.app/yt?search={searchQuery}`;
+        const videoSearchUrl = `https://betadash-search-download.vercel.app/yt?search=${searchQuery}`;
 
         const videoResponse = await axios.get(videoSearchUrl);
         const videoData = videoResponse.data[0];
@@ -30,7 +28,6 @@ app.get('/yt-audio', async (req, res) => {
         const videoUrl = videoData.url;
         const videoId = new URL(videoUrl).searchParams.get('v');
 
-        const video = await yts({ videoId });
         const result = {
             url: `https://youtu.be/${videoId}?si=wLIhI3mr1YV0gl9L`
         };
