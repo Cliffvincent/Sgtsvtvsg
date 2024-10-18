@@ -18,7 +18,7 @@ app.get('/yt-audio', async (req, res) => {
     }
 
     try {
-        const videoSearchUrl = `https://api-nako-choru-production.up.railway.app/yt?search=${searchQuery}&limit=1`;
+        const videoSearchUrl = `https://betadash-search-download.vercel.app/yt?search={searchQuery}`;
 
         const videoResponse = await axios.get(videoSearchUrl);
         const videoData = videoResponse.data[0];
